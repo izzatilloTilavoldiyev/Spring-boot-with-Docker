@@ -15,5 +15,11 @@ services:
       POSTGRES_PASSWORD: 1234
     volumes:
       - pg_data:/var/lib/postgresql/data
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: 1234
+      PGADMIN_LISTEN_PORT: 5050
 volumes:
   pg_data:
