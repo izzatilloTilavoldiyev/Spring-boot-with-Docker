@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uz.pdp.springbootwithdocker.dto.UserDTO;
 import uz.pdp.springbootwithdocker.entity.UserEntity;
+import uz.pdp.springbootwithdocker.exception.DataNotFoundException;
 import uz.pdp.springbootwithdocker.repository.UserRepository;
 
 import java.util.List;
@@ -35,5 +36,16 @@ public class UserService {
 
     public List<UserEntity> getAll() {
         return userRepository.findAll();
+    }
+
+    public UserEntity getById(UUID userID) {
+        return userRepository.findById(userID).orElseThrow(
+                () -> new DataNotFoundException("User not found with ID: " + userID)
+        );
+    }
+
+    public void deleteUser(UUID userID) {
+        UUID id = getById(userID).getId();
+        userRepository.deleteById(id);
     }
 }
